@@ -1,0 +1,112 @@
+.body{
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/*          NAV BAR    */
+
+.login-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around ;
+    background-color: #333;
+    align-items: center;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.login-header .arrow-back{
+    background-color: #333;
+    border: 0;
+    padding: 0;
+    }
+.login-header .arrow-back:hover{
+    transform: scale(1.1);
+}
+.logo-header{
+    margin-left: 6.5vw;
+    width: 80px;
+}
+.login-header .registration-header{
+    background-color:rgb(240, 218, 138);
+    border-radius: 10px;
+    border: 0;
+    font-size: 1.05rem;
+    padding: 10px 20px 10px 20px;
+}
+.login-header .registration-header:hover{
+    background-color: rgb(236, 207, 100);
+    color: rgb(46, 45, 45);
+  }
+
+/*        SECTION LOGIN   */
+
+.login-screen-photo{
+    width: 100vw;
+    display: block;
+    position: absolute;
+    left: 0;
+    z-index: 0;
+    top: 8vh;
+    
+}
+
+.login-screen{
+    margin-left: 30vw;
+    margin-right: 30vw;
+    position: absolute;
+    top: 50vh;
+    left: 0;  
+    margin-top: 5vh;
+
+}
+.login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    width: 40vw;
+
+}
+.login-input{
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgb(160, 159, 159);
+    font-size: 1.3rem;
+    margin: 2vh 0 2vh 0;
+    text-align: center;
+}
+.password-input{
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgb(160, 159, 159);
+    font-size: 1.3rem;
+    margin: 2vh 0 0 0;
+    text-align: center;
+}
+
+.forgotten-password{
+    color: #333;
+    text-align: right;
+    margin-top: 0;
+    margin-bottom: 2vh;
+    font-size: 1.15rem;
+}
+
+.login-btn{
+    background-color:rgb(240, 218, 138);
+    border-radius: 10px;
+    border: 0;
+    font-size: 1.05rem;
+    padding: 10px 20px 10px 20px;
+    font-size: 1.3rem;
+    width: 30vw;
+    margin: 2vh 0 2vh 5vw;
+}
+.login-btn:hover{
+    background-color: rgb(236, 207, 100);
+    color: rgb(46, 45, 45);
+}
