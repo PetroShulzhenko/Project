@@ -11,23 +11,24 @@
 <body>
     <header class="login-header">
         <form action="../first-page/FirstPage.html">
-            <button class="arrow-back"><img src="../images/back-arrow.png" width="50px" alt=""></button>
+            <button class="arrow-back"><img src="../test/src/images/back-arrow.png" width="50px" alt=""></button>
         </form>
-        <img src="../images/first-screen.png" class="logo-header" width="100px" alt="">
+        <img src="../test/src/images/first-screen.png" class="logo-header" width="100px" alt="">
         <form action="../registration/registration.html">
             <button class="registration-header"> Регистрация</button>
         </form>
     </header>
-    <img src="../images/test-login.jpg"  alt="" class="login-screen-photo">
+    <img src="../test/src/images/test-login.jpg"  alt="" class="login-screen-photo">
     <section class="login-screen">
-        <form class="login-form" action="" method="POST">
-            <input class="login-input" name="login" type="text" placeholder="Логин" required>  <br>
-            <input class="password-input" name="password" type="password" placeholder="Пароль" required> <br>
+        <form class="login-form" id="login-form" action="" method="POST">
+            <input class="login-input" id="login" name="login" type="text" placeholder="Логин" required>  <br>
+            <input class="password-input" id="password" name="password" type="password" placeholder="Пароль" required> <br>
             <a class="forgotten-password" href=""> Забыли пароль? </a>
-            <button class="login-btn" type="submit">Войти</button>
+            <button class="login-btn" type="submit" value="Submit">Войти</button>
         </form>
     </section>
     
+    <script src="login.js"> </script>
     
 </body>
 </html>
