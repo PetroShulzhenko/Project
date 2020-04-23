@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registration.css">
+    <link rel="shortcut icon" href="../images/title-image.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300&display=swap" rel="stylesheet">
+    <title>Boreyko | online trainer</title>
+</head>
+<body>
+    <header class="reg-header">
+        <form action="../first-page/FirstPage.html">
+            <button class="arrow-back"><img src="../images/back-arrow.png" width="50px" alt=""></button>
+        </form>
+        <img src="../images/first-screen.png" class="logo-header" width="100px" alt="">
+    </header>
+    <div class="text">
+        <h1>Добро пожаловать</h1>
+        <ul>
+            <li>Зарегистрируйся</li>
+            <li>Заполни анкету</li>
+            <li>Прогрессируй</li>
+        </ul>
+    </div>
+    <img src="../images/test-login.jpg"  alt="http://localhost:8080/gym/login.html" class="login-screen-photo">
+    <section class="login-screen">
+        <form class="login-form" action="" method="POST">
+            <input class="surname" id="surname" name="surname" type="text" placeholder="Фамилия" required> <span id="surname-valid"></span> <img id="cross-surname" src="../images/cross.png" alt="" width="30px"> <img id="tick-surname" src="../images/tick.png" alt="" width="30px"> <br>
+            <input class="name" id="name" name="name" type="text" placeholder="Имя" required> <span id="name-valid"></span> <img id="cross-name" src="../images/cross.png" alt="" width="30px"> <img id="tick-name" src="../images/tick.png" alt="" width="30px"><br>
+            <input class="fathers-name" id="fathers-name" name="fathers-name" type="text" placeholder="Отчество" required> <span id="fn-valid"></span> <img id="cross-fn" src="../images/cross.png" alt="" width="30px"> <img id="tick-fn" src="../images/tick.png" alt="" width="30px"> <br>
+            <input class="email" id="email" name="email" type="email" placeholder="Email" required>  <span id="email-valid"></span> <img id="cross-email" src="../images/cross.png" alt="" width="30px"> <img id="tick-email" src="../images/tick.png" alt="" width="30px"> <br>
+            <input class="confirm-email" id="confirm-email" name="confirm-email" type="text" placeholder="Подтвердите email" required> <span id="email2-valid"></span> <img id="cross-email2" src="../images/cross.png" alt="" width="30px"> <img id="tick-email2" src="../images/tick.png" alt="" width="30px"> <br>
+            <input class="password" id="password" name="password" type="password" placeholder="Выберите пароль" required>  <span id="password-valid"></span> <img id="cross-password" src="../images/cross.png" alt="" width="30px"> <img id="tick-password" src="../images/tick.png" alt="" width="30px">
+            <p>Создавая аккаунт, я принимаю <a href="">Условия приватности</a> и <a href="">Условия оплаты</a></p>
+            <button class="login-btn" type="submit">Создать</button>
+        </form>
+     
+        <label class="container">Я хочу получать интересные новости
+                <input type="radio" name="radio">
+                <span class="checkmark"></span>
+              </label>
+    </section>
+        
+    
+
+
+
+<script src="registration.js"> </script>
+</body>
+</html>

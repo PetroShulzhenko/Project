@@ -8,11 +8,11 @@ function postLogin(e) {
     var params = "login=" + login + "&password=" + password; 
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'SERVER FILE HERE !!!!!!', true);
+    xhr.open('POST', 'http://localhost:8080/gym/login', true);
     xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
 
     xhr.onload = function(){
-        if( this.responseText == true) {
+        if (this.responseText == true) {
             window.location.href = "../test/src/pages/Home.vue";
         }
         else {
