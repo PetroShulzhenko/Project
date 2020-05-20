@@ -158,3 +158,32 @@ function Surname(event) {
           }
         }
          surname.addEventListener('input', Surname);
+
+
+         document.getElementById("login-form").addEventListener('submit',postReg);
+
+          function postReg(e) {
+              e.preventDefault();
+
+              var surname = document.getElementById("surname").value;
+              var name = document.getElementById("name").value;
+              var fathersName = document.getElementById("fathers-name").value;
+              var email = document.getElementById("email").value;
+              var password = document.getElementById("password").value;
+              var params = "surname=" + surname + "name=" + name +"fathersName=" + fathersName + "email=" + email +"&password=" + password; 
+
+              var xhr = new XMLHttpRequest();
+              xhr.open('POST', 'SERVER FILE HERE !!!!!!', true);
+              xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+
+              xhr.onload = function(){
+                  if( (this.status == 200) && (JSON.parse(this.responseText) == true) ) {
+                      window.location.href = "./login.html";
+                  }
+                  else {
+                      alert("Что-то пошло не так..");
+                  }
+              }
+
+              xhr.send(params);
+          }
