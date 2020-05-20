@@ -170,7 +170,7 @@ function Surname(event) {
               var fathersName = document.getElementById("fathers-name").value;
               var email = document.getElementById("email").value;
               var password = document.getElementById("password").value;
-              var params = "surname=" + surname + "name=" + name +"fathersName=" + fathersName + "email=" + email +"&password=" + password; 
+              var params = "surname=" + surname + "&name=" + name +"&fathersName=" + fathersName + "&email=" + email +"&password=" + password; 
 
               var xhr = new XMLHttpRequest();
               xhr.open('POST', 'SERVER FILE HERE !!!!!!', true);
