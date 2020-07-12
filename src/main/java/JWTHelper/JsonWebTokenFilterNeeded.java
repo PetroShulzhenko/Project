@@ -20,6 +20,8 @@ public class JsonWebTokenFilterNeeded implements ContainerRequestFilter {
     public ContainerRequest filter(ContainerRequest request) {
         String path = request.getPath();
 
+        System.err.println("Path is: " + path);
+
         if (path.equals(AUTHORIZATION_SERVICE_PATH))
             return request;
 

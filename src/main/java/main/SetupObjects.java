@@ -2,6 +2,7 @@ package main;
 
 import dbService.DBService;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -10,6 +11,8 @@ public class SetupObjects {
     private static String fromEmail;
     private static String emailPassword;
     private static ExecutorService executorService;
+    private static HashMap<Long, String> couchesLongToString;
+    private static HashMap<String, Long> couchesStringToLong;
 
     private SetupObjects() {
     }
@@ -19,6 +22,8 @@ public class SetupObjects {
         fromEmail = from;
         emailPassword = password;
         executorService = Executors.newFixedThreadPool(numberOfThreads);
+        couchesLongToString = new HashMap<Long, String>();
+        couchesStringToLong = new HashMap<String, Long>();
     }
 
     public static DBService getDbService() {
@@ -36,4 +41,8 @@ public class SetupObjects {
     public static ExecutorService getExecutorService() {
         return executorService;
     }
+
+    public static HashMap<Long, String> getCouchesLongToString() { return couchesLongToString; }
+
+    public static HashMap<String, Long> getCouchesStringToLong() { return couchesStringToLong; }
 }

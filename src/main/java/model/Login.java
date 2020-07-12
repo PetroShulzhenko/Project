@@ -9,10 +9,22 @@ public class Login {
     private final String login;
     @XmlElement
     private final String password;
+    @XmlElement
+    private final String name;
+    @XmlElement
+    private final String surname;
+    @XmlElement
+    private final String fathersName;
+    @XmlElement
+    private final boolean isSub;
 
-    public Login(String login, String password) {
+    public Login(String login, String password, String name, String surname, String fathersName, boolean isSub) {
         this.login = login;
         this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.fathersName = fathersName;
+        this.isSub = isSub;
     }
 
     public String getLogin() {
@@ -21,6 +33,12 @@ public class Login {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getAccountInforamtion() {
+        int sub = (isSub) ? 1 : 0;
+
+        return "('" + name + "', '" + surname + "', '" + fathersName+ "', '" + sub + "')";
     }
 
     @Override

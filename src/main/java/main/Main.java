@@ -1,5 +1,6 @@
 package main;
 
+import dbService.DBException;
 import org.glassfish.grizzly.http.server.*;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -25,8 +26,7 @@ public class Main {
     public static void main(String[] args) {
         final HttpServer server = startServer();
 
-        //server.getServerConfiguration().addHttpHandler(new StaticHttpHandler("Desktop/project/src/main/resources/static"), "/");
-        server.getServerConfiguration().addHttpHandler(new CLStaticHttpHandler(Main.class.getClassLoader(), "/static/"), "/");  // Problem is there
+        server.getServerConfiguration().addHttpHandler(new CLStaticHttpHandler(Main.class.getClassLoader(), "/static/"), "/");
 
         try {
             server.start();

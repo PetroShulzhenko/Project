@@ -20,6 +20,7 @@ import javax.mail.internet.MimeMessage;
 import dbService.DBException;
 import dbService.DBService;
 import dbService.InvalidSymbolsException;
+import model.IdsPair;
 import model.Login;
 import main.SetupObjects;
 
@@ -66,7 +67,7 @@ public class ResetPasswordService {
             message.setSubject("Reset password");
 
             // Now set the actual message
-            message.setText("Testing");
+            message.setText("Follow the link to reset the password: http://localhost:8080/Login/Change-Password.html?login=" + toEmail);
 
             // Send message
             Transport.send(message);
@@ -79,7 +80,8 @@ public class ResetPasswordService {
 
     @POST
     @Consumes("application/x-www-form-urlencoded")
-    public void sendResetEmail(@FormParam("toEmail") String toEmail) throws Throwable {
+    public void sendResetEmail(@FormParam("login") String toEmail) throws WebApplicationException {
+        
         try {
             if (dbService.checkUser(toEmail)) {       // checking whether account exists
                 CompletableFuture.supplyAsync(() -> {
@@ -89,17 +91,19 @@ public class ResetPasswordService {
             }
         } catch (DBException e) {
             e.printStackTrace();
+
             throw new WebApplicationException(e);
         }
     }
 
     @PUT
-    @Path("/reset")
     @Consumes("application/x-www-form-urlencoded")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response resetPassword(@FormParam("login") String login, @FormParam("password") String password) {
+    public Response resetPassword(@FormParam("newPassword") String password, @FormParam("login") String login) {
+        System.err.println("Password reset attempt with login = " + login + ", password = " + password);
+
         try {
-            dbService.updatePassword(new Login(login, password));
+            dbService.updatePassword(new IdsPair(login, password));
         } catch (DBException e) {
             e.printStackTrace();
             return Response.status(Response.Status.FORBIDDEN)

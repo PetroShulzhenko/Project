@@ -7,12 +7,12 @@ import java.util.ArrayList;
 @XmlRootElement
 public class Day {
     @XmlElement
-    private final int number_of_day;
+    private final String date;
     @XmlElement
     private ArrayList<String> exercises;
 
-    public Day(int number_of_day) {
-        this.number_of_day = number_of_day;
+    public Day(String date) {
+        this.date = date;
     }
 
     public void addExercise(String exercise) {
@@ -23,20 +23,17 @@ public class Day {
         return exercises.size();
     }
 
-    public int getNumberOfDay() {
-        return number_of_day;
+    public String getNumberOfDay() {
+        return date;
     }
 
     public ArrayList<String> getExercises() {
         return exercises;
     }
 
-    @Override
-    public String toString() {
+    public String exercisesToString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Day{number_od_day=")
-                .append(number_of_day)
-                .append(", exercises=['");
+        builder.append("['");
         for (int i = 0, end_ = exercises.size() - 1; i < end_; ++i) {
             builder.append(exercises.get(i))
                     .append('\'')
@@ -44,7 +41,19 @@ public class Day {
         }
         builder.append(exercises.get(exercises.size() - 1))
                 .append('\'')
-                .append("]}");
+                .append("]");
+
+        return builder.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Day{date=")
+                .append(date)
+                .append(", exercises=")
+                .append(exercisesToString())
+                .append("}");
 
         return builder.toString();
     }

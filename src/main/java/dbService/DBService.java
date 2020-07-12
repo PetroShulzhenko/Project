@@ -1,22 +1,85 @@
 package dbService;
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.concurrent.ExecutorService;
+import java.sql.*;
+import java.util.ArrayList;
 
 import AccountDAO.*;
-import main.SetupObjects;
+import DaysDAO.Days;
+import model.IdsPair;
 import model.Login;
 
 public class DBService {
     private final Connection connection;
-    //private final ExecutorService executorService;
 
     public DBService() {
         connection = getMySQLConnection();
-        //executorService = SetupObjects.getDbExecutor();
+    }
+
+    public void addDays(String couch, Integer id, String date, String exercises) throws DBException {
+        try {
+            connection.setAutoCommit(false);
+            Days dao = new Days(connection, couch);
+            dao.createTable(id);
+
+            dao.addDay(date, exercises, id);
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ignore) {}
+            throw new DBException(e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ignore) {}
+        }
+    }
+
+    public String getDay(String couch, Integer id, String date) throws DBException {
+        try {
+            connection.setAutoCommit(false);
+            Days dao = new Days(connection, couch);
+            dao.createTable();
+
+            String result = dao.getDay(date, id);
+
+            connection.commit();
+
+            return result;
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ignore) {}
+            throw new DBException(e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ignore) {}
+        }
+    }
+
+    public ArrayList<String> getAllDays(String couch, Integer id) throws DBException {
+        try {
+            connection.setAutoCommit(false);
+            Days dao = new Days(connection, couch);
+            dao.createTable();
+
+            ArrayList<String> result = dao.getAllDays(id);
+
+            connection.commit();
+
+            return result;
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ignore) {}
+            throw new DBException(e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ignore) {}
+        }
     }
 
     public int getUserId(String login) throws DBException {
@@ -25,7 +88,7 @@ public class DBService {
         try {
             connection.setAutoCommit(false);
             Account dao = new Account(connection);
-            dao.createTable();
+            dao.createTables();
 
             result = dao.getUserNumberId(login);
 
@@ -53,7 +116,7 @@ public class DBService {
         try {
             connection.setAutoCommit(false);
             Account dao = new Account(connection);
-            dao.createTable();
+            dao.createTables();
             try {
                 dao.insertUser(id);
             } catch (AccException e) {
@@ -74,7 +137,7 @@ public class DBService {
         }
     }
 
-    public void updatePassword(Login id) throws DBException {
+    public void updatePassword(IdsPair id) throws DBException {
         try {
             connection.setAutoCommit(false);
             Account dao = new Account(connection);
@@ -104,7 +167,7 @@ public class DBService {
         try {
             connection.setAutoCommit(false);
             Account dao = new Account(connection);
-            dao.createTable();
+            dao.createTables();
 
             int resultId = dao.getUserNumberId(id);
 
@@ -143,14 +206,16 @@ public class DBService {
             return DriverManager.getConnection(url.toString(), name, password);
         } catch (SQLException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         return null;
     }
 
     public void cleanUp() throws DBException {
-        Account dao = new Account(connection);
+        Account accountDao = new Account(connection);
+
         try {
-            dao.dropTable();
+            accountDao.dropTables();
         } catch (SQLException e) {
             throw new DBException(e);
         }

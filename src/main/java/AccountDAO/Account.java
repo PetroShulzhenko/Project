@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import dbService.Executor;
+import model.IdsPair;
 import model.Login;
 
 import javax.print.DocFlavor;
@@ -20,8 +21,18 @@ public class Account extends AccountDAO<Login> {
             throw new AccException("already exists");
         }
 
-        executor.execUpdate("insert into users (user_name, pass) values ('" + IdKeys.getLogin() + "', '" +
-                IdKeys.getPassword() + "')");
+        StringBuilder firstCommand = new StringBuilder();
+        firstCommand.append("insert into users (user_name, pass) values ('").
+                append(IdKeys.getLogin()).
+                append("', '").
+                append(IdKeys.getPassword()).
+                append("')");
+        executor.execUpdate(firstCommand.toString());
+
+        StringBuilder secondCommand = new StringBuilder();
+        secondCommand.append("insert into extended_users (name, surname, fathers_name, is_sub) values ").
+                append(IdKeys.getAccountInforamtion());
+        executor.execUpdate(secondCommand.toString());
     }
 
     /*@Override
@@ -36,17 +47,27 @@ public class Account extends AccountDAO<Login> {
 
     @Override
     public <T> int getUserNumberId(T IdKeys) throws SQLException {
-        String query;
+        StringBuilder query = new StringBuilder();
         if (IdKeys instanceof String)
-            query = "select * from users where user_name='" + IdKeys + "'";
-        else if (IdKeys instanceof Login) {
+            query.append("select * from users where user_name='" + IdKeys + "'");
+        else if (IdKeys instanceof IdsPair) {
+            IdsPair id = (IdsPair) IdKeys;
+            query.append("select * from users where user_name='").
+                    append(id.getLogin()).
+                    append("' and pass='").
+                    append(id.getPassword()).
+                    append("'");
+        } else if (IdKeys instanceof Login) {
             Login id = (Login) IdKeys;
-            query = "select * from users where user_name='" + id.getLogin() + "' and pass='" +
-                    id.getPassword() + "'";
+            query.append("select * from users where user_name='").
+                    append(id.getLogin()).
+                    append("' and pass='").
+                    append(id.getPassword()).
+                    append("'");
         } else
             return -1;
 
-        return executor.execQuery(query,
+        return executor.execQuery(query.toString(),
                 result -> {
                     if (result.next())
                         return result.getInt(1);
@@ -54,22 +75,29 @@ public class Account extends AccountDAO<Login> {
                 });
     }
 
-    public Login getLogin(int id) throws SQLException {
+    public IdsPair getLogin(int id) throws SQLException {
         return executor.execQuery("select * from users where id=" + id, result -> {
             result.next();
-            return new Login(result.getString(2), result.getString(3));            // build a table;
+            return new IdsPair(result.getString(2), result.getString(3));            // build a table;
         });
     }
 
-    public void updatePassword(Login IdKeys) throws SQLException {
-        executor.execUpdate("update users set pass='" + IdKeys.getPassword() + "' where user_name='" + IdKeys.getLogin() + "'");
+    public void updatePassword(IdsPair IdKeys) throws SQLException {
+        executor.execUpdate(new StringBuilder().append("update users set pass='").
+                append(IdKeys.getPassword()).
+                append("' where user_name='").
+                append(IdKeys.getLogin()).
+                append("'").toString());
     }
 
-    public void createTable() throws SQLException {             // structure of the table
-        executor.execUpdate("create table if not exists users (id int auto_increment, user_name varchar(256), pass varchar(256), primary key (id))");
+    public void createTables() throws SQLException {             // structure of the table
+        executor.execUpdate("create table if not exists users (id int auto_increment, user_name varchar(50), pass varchar(20), primary key (id))");
+        executor.execUpdate("create table if not exists extended_users (id int auto_increment, name varchar(20), surname varchar(20), " +
+                "fathers_name varchar(20), is_sub tinyint(1), primary key (id))");
     }
 
-    public void dropTable() throws SQLException {
+    public void dropTables() throws SQLException {
         executor.execUpdate("drop table users");
+        executor.execUpdate("drop table extended_users");
     }
 }

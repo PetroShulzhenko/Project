@@ -1,0 +1,11 @@
+phantom:
+	address: 127.0.0.1:8080
+	ssl: false
+	load_profile:
+		load_type: rps
+		schedule: line(1, 10, 60)
+
+console:
+	enabled: true
+telegraf:
+	enabled: false
